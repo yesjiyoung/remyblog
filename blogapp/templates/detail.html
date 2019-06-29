@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<div class = "container">
+
+<h1 style = "font-family: 'InkLipquid'">My Story</h1>
+<h2>[제목] {{blog.title}} </h>
+<h5>[날짜] {{ blog.pub_date }}</h5>
+<h2>[내용] {{ blog.body }}</h2>
+
+</div>
+
+{% endblock %}

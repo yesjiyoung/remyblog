@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}   
+
+{% block contents %}
+
+<div>
+    {% if user.is_active %}
+    <h5> HI, {{user.username}} </h5>
+    <h6>If you want to log out, click -> <a href = "{% url 'logout' %}">Logout</a></h6>
+
+    {% else %}
+    <h1>로그인해주세요!</h1>
+
+    <form method = "POST" action="{% url 'login' %}">
+        {% csrf_token %}
+            
+        사용자 이름 : 
+        <br>
+        <input name="username" type="text" value="">
+        <br>
+        비밀번호 : 
+        <br>
+        <input name="password" type="password" value="">
+        <br>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Login">
+    </form>
+    
+    <h3>회원가입하러가기->
+        <a href="{% url 'signup' %}">
+        <button type="button" class="btn btn-primary">Signup!</button>
+        </a>
+    </h3>
+    
+    
+    {% endif %}
+</div>
+
+    <div class="alert alert-info" role="alert" style = "font-family: a옛날목욕탕L" >
+        {% for blog in posts %}
+            [제목]{{blog.title}}
+            <br>
+            [작성 날짜]{{blog.pub_date}}
+            <br>
+            [내용]<a href = "{% url 'detail' blog.id %}">상세내용보기</a> <!--{{blog.body}}-->
+            <br><br>
+    
+        {% endfor %}
+
+        {% if posts.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{posts.previous_page_number}}"> Previous </a>
+        {% endif %}
+
+        <span>{{posts.number}}</span>
+        <span>of</span>
+        <span>{{posts.paginator.num_pages}}</span>
+
+        {% if posts.has_next %}
+        <a href="?page={{posts.next_page_number}}"> NEXT </a>
+        <a href="?page={{posts.paginator.num_pages}}"> LAST </a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+</html>
